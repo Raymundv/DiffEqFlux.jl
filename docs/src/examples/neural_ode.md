@@ -14,7 +14,7 @@ follow a full explanation of the definition and training process:
 ```@example neuralode_cp
 using ComponentArrays, Lux, DiffEqFlux, OrdinaryDiffEq, Optimization, OptimizationOptimJL,
       OptimizationOptimisers, Random, Plots
-#Seed
+#Seed needs to be defined
 rng = MersenneTwister(99)
 #Defining the parameters for the model is necessary.
 u0 = Float32[2.0; 0.0]
@@ -72,6 +72,7 @@ result_neuralode = Optimization.solve(
 
 optprob2 = remake(optprob; u0 = result_neuralode.u)
 #In the following line of code, a semicolon ";" needs to be placed right after the Optim.BFGS(; initial_stepnorm = 0.01)
+#An initial_stepnorm parameters needs to be set. 
 result_neuralode2 = Optimization.solve(
     optprob2, Optim.BFGS(; initial_stepnorm = 0.01); callback, allow_f_increases = false)
 
@@ -87,7 +88,7 @@ Let's get a time series array from a spiral ODE to train against.
 ```@example neuralode
 using ComponentArrays, Lux, DiffEqFlux, OrdinaryDiffEq, Optimization, OptimizationOptimJL,
       OptimizationOptimisers, Random, Plots
-
+#Seed needs to be planted
 rng = MersenneTwister(99)
 u0 = Float32[2.0; 0.0]
 datasize = 30
@@ -194,6 +195,7 @@ halt when near the minimum.
 # Retrain using the LBFGS optimizer
 optprob2 = remake(optprob; u0 = result_neuralode.u)
 #In the following line of code, a semicolon ";" needs to be placed right after the Optim.BFGS(; initial_stepnorm = 0.01)
+#An initial_stepnorm parameters needs to be set. 
 result_neuralode2 = Optimization.solve(optprob2, Optim.BFGS(; initial_stepnorm = 0.01);
     callback = callback, allow_f_increases = false)
 ```
