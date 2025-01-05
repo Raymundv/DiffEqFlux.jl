@@ -16,7 +16,7 @@ using ComponentArrays, Lux, DiffEqFlux, OrdinaryDiffEq, Optimization, Optimizati
       OptimizationOptimisers, Random, Plots
 #Seed
 rng = MersenneTwister(99)
-#Defining the initial conditions for the model is necessary.
+#Defining the parameters for the model is necessary.
 u0 = Float32[2.0; 0.0]
 datasize = 30
 tspan = (0.0f0, 1.5f0)
