@@ -20,7 +20,7 @@ u0 = Float32[2.0; 0.0]
 datasize = 30
 tspan = (0.0f0, 1.5f0)
 tsteps = range(tspan[1], tspan[2]; length = datasize)
-#Here is where the model is defined as an Ordinary differential Equation. It can be adapted to other models.
+#In the following function is where the model is defined as an Ordinary differential Equation. The function can be adapted #to other models.
 function trueODEfunc(du, u, p, t)
     true_A = [-0.1 2.0; -2.0 -0.1]
     du .= ((u .^ 3)'true_A)'
@@ -87,12 +87,12 @@ Let's get a time series array from a spiral ODE to train against.
 using ComponentArrays, Lux, DiffEqFlux, OrdinaryDiffEq, Optimization, OptimizationOptimJL,
       OptimizationOptimisers, Random, Plots
 
-rng = Xoshiro(0)
+rng = MersenneTwister(99)
 u0 = Float32[2.0; 0.0]
 datasize = 30
 tspan = (0.0f0, 1.5f0)
 tsteps = range(tspan[1], tspan[2]; length = datasize)
-
+#In the following function is where the model is defined as an Ordinary differential Equation. The function can be adapted #to other models.
 function trueODEfunc(du, u, p, t)
     true_A = [-0.1 2.0; -2.0 -0.1]
     du .= ((u .^ 3)'true_A)'
