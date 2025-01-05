@@ -14,8 +14,9 @@ follow a full explanation of the definition and training process:
 ```@example neuralode_cp
 using ComponentArrays, Lux, DiffEqFlux, OrdinaryDiffEq, Optimization, OptimizationOptimJL,
       OptimizationOptimisers, Random, Plots
-
+#Seed
 rng = MersenneTwister(99)
+#Defining the initial conditions for the model is necessary.
 u0 = Float32[2.0; 0.0]
 datasize = 30
 tspan = (0.0f0, 1.5f0)
