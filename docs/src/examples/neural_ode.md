@@ -56,7 +56,7 @@ function callback(state, l; doplot = false)
     end
     return false
 end
-
+#The following line of code is important because it starts the initial parameters for the NeuralODE. 
 pinit = ComponentArray(p)
 callback((; u = pinit), loss_neuralode(pinit); doplot = true)
 
@@ -155,7 +155,7 @@ callback = function (state, l; doplot = false)
     end
     return false
 end
-
+#The following line of code is important because it defines the initial parameters for the NeuralODE. 
 pinit = ComponentArray(p)
 callback((; u = pinit), loss_neuralode(pinit))
 ```
@@ -192,7 +192,7 @@ halt when near the minimum.
 ```@example neuralode
 # Retrain using the LBFGS optimizer
 optprob2 = remake(optprob; u0 = result_neuralode.u)
-
+#In the following line, the semicolon is needed right after the Optim.BFGS(; initial_stepnorm = 0.01)
 result_neuralode2 = Optimization.solve(optprob2, Optim.BFGS(; initial_stepnorm = 0.01);
     callback = callback, allow_f_increases = false)
 ```
