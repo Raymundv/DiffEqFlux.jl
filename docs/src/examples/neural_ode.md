@@ -74,10 +74,10 @@ result_neuralode = Optimization.solve(
     optprob, OptimizationOptimisers.Adam(0.05); callback = callback, maxiters = 300)
 
 optprob2 = remake(optprob; u0 = result_neuralode.u)
-#In the following line of code, a semicolon ";" needs to be placed right after the Optim.BFGS(; initial_stepnorm = 0.01)
+#In the following line of code, a semicolon ";" needs to be placed right after the Optim.BFGS(; initial_stepnorm = 0.1)
 #An initial_stepnorm parameters needs to be set. 
 result_neuralode2 = Optimization.solve(
-    optprob2, Optim.BFGS(; initial_stepnorm = 0.01); callback, allow_f_increases = false)
+    optprob2, Optim.BFGS(; initial_stepnorm = 0.1); callback, allow_f_increases = false)
 
 callback((; u = result_neuralode2.u), loss_neuralode(result_neuralode2.u); doplot = true)
 ```
@@ -208,7 +208,7 @@ halt when near the minimum.
 optprob2 = remake(optprob; u0 = result_neuralode.u)
 #In the following line of code, a semicolon ";" needs to be placed right after the Optim.BFGS(; initial_stepnorm = 0.1)
 #An initial_stepnorm parameters needs to be set. 
-result_neuralode2 = Optimization.solve(optprob2, Optim.BFGS(; initial_stepnorm = 0.01);
+result_neuralode2 = Optimization.solve(optprob2, Optim.BFGS(; initial_stepnorm = 0.1);
     callback = callback, allow_f_increases = false)
 ```
 
