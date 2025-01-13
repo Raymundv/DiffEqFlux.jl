@@ -98,7 +98,11 @@ u0 = Float32[2.0; 0.0]
 datasize = 30
 tspan = (0.0f0, 1.5f0)
 tsteps = range(tspan[1], tspan[2]; length = datasize)
-#In the following function is where the model is defined as an Ordinary differential Equation. The function can be adapted #to other models.
+
+```
+In the following function is where the model is defined as an Ordinary differential Equation. 
+The following function needs to be modified to express the model prompted by the user.
+```
 function trueODEfunc(du, u, p, t)
     true_A = [-0.1 2.0; -2.0 -0.1]
     du .= ((u .^ 3)'true_A)'
