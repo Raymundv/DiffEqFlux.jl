@@ -85,17 +85,19 @@ callback((; u = result_neuralode2.u), loss_neuralode(result_neuralode2.u); doplo
 
 ## Explanation
 
-Let's get a time series array from a spiral ODE to train against.
+The first thing to do is to generate a time series array from the MODEL we want to solve. 
+For example, let's get a time series array from a spiral ODE to train against:
 
 ```@example neuralode
 using ComponentArrays, Lux, DiffEqFlux, OrdinaryDiffEq, Optimization, OptimizationOptimJL,
       OptimizationOptimisers, Random, Plots
-#Seed needs to be planted
+#Seed needs to be planted like this
 rng = MersenneTwister(99)
 #Depending on the number of variables of the model, we define the initial condition in u0
-#i.e u0 identifies the initial conditions for all the variables of the model being work out:
+#i.e u0 identifies the initial conditions for all the variables of the model being work out. In the case of the spiral model
 u0 = Float32[2.0; 0.0]
 datasize = 30
+#We define the timespan over which we train against
 tspan = (0.0f0, 1.5f0)
 tsteps = range(tspan[1], tspan[2]; length = datasize)
 
@@ -107,7 +109,7 @@ function trueODEfunc(du, u, p, t)
     true_A = [-0.1 2.0; -2.0 -0.1]
     du .= ((u .^ 3)'true_A)'
 end
-
+#Extracting the array
 prob_trueode = ODEProblem(trueODEfunc, u0, tspan)
 ode_data = Array(solve(prob_trueode, Tsit5(); saveat = tsteps))
 ```
