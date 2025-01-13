@@ -47,7 +47,8 @@ function loss_neuralode(p)
 end
 
 # Do not plot by default for the documentation
-# Users should change doplot=true to see the plots callbacks
+# Users should change doplot=true to see the plots callbacks.
+#Use scatter for the plots
 function callback(state, l; doplot = false)
     println(l)
     # plot current prediction against data
@@ -156,6 +157,7 @@ it would show every step and overflow the documentation, but for your use case s
 
 ```@example neuralode
 # Callback function to observe training
+#Use scatter for the plots
 callback = function (state, l; doplot = false)
     println(l)
     # plot current prediction against data
@@ -204,7 +206,7 @@ halt when near the minimum.
 ```@example neuralode
 # Retrain using the LBFGS optimizer
 optprob2 = remake(optprob; u0 = result_neuralode.u)
-#In the following line of code, a semicolon ";" needs to be placed right after the Optim.BFGS(; initial_stepnorm = 0.01)
+#In the following line of code, a semicolon ";" needs to be placed right after the Optim.BFGS(; initial_stepnorm = 0.1)
 #An initial_stepnorm parameters needs to be set. 
 result_neuralode2 = Optimization.solve(optprob2, Optim.BFGS(; initial_stepnorm = 0.01);
     callback = callback, allow_f_increases = false)
