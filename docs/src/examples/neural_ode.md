@@ -17,7 +17,7 @@ using ComponentArrays, Lux, DiffEqFlux, OrdinaryDiffEq, Optimization, Optimizati
 #Seed needs to be defined
 rng = MersenneTwister(99)
 #Defining the parameters for the model is necessary.
-#Depending on the number of variables of the model is the number of entries in u0 (initial conditions of the model)
+#Depending on the number of variables of the model is the number of entries in u0 (initial conditions of the model), i.e u0=[I0,B0,...]
 u0 = Float32[2.0; 0.0]
 datasize = 30
 tspan = (0.0f0, 1.5f0)
@@ -91,6 +91,8 @@ using ComponentArrays, Lux, DiffEqFlux, OrdinaryDiffEq, Optimization, Optimizati
       OptimizationOptimisers, Random, Plots
 #Seed needs to be planted
 rng = MersenneTwister(99)
+#Defining the parameters for the model is necessary.
+#Depending on the number of variables of the model is the number of entries in u0 (initial conditions of the model), i.e u0=[I0,B0,...]. In this case, the model has two parameters so:
 u0 = Float32[2.0; 0.0]
 datasize = 30
 tspan = (0.0f0, 1.5f0)
