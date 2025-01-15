@@ -18,8 +18,7 @@ using ComponentArrays, Lux, DiffEqFlux, OrdinaryDiffEq, Optimization, Optimizati
 rng = MersenneTwister(99)
 
 #Depending on the number of variables of the model, we define the initial condition in u0
-#i.e u0 identifies the initial conditions for all the variables of the model being work out:
-u0 = Float32[2.0; 0.0]
+u0 = Float32[2.0; 0.0] #Adapt accordingly to the number of variables of the model being solved
 datasize = 30
 tspan = (0.0f0, 1.5f0)
 tsteps = range(tspan[1], tspan[2]; length = datasize)
@@ -96,7 +95,7 @@ using ComponentArrays, Lux, DiffEqFlux, OrdinaryDiffEq, Optimization, Optimizati
 rng = MersenneTwister(99)
 #Depending on the number of variables of the model, we define the initial condition in u0
 #i.e u0 identifies the initial conditions for all the variables of the model being work out. In the case of the spiral model
-u0 = Float32[2.0; 0.0]
+u0 = Float32[2.0; 0.0] #Adapt accordingly to the number of variables of the model being solved
 datasize = 30
 #We define the timespan over which we train against
 tspan = (0.0f0, 1.5f0)
