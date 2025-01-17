@@ -33,7 +33,7 @@ ode_data = Array(solve(prob_trueode, Tsit5(); saveat = tsteps))
 
 dudt2 = Chain(x -> x .^ 3, Dense(2, 20, tanh), Dense(20, 2))
 p, st = Lux.setup(rng, dudt2)
-prob_neuralode = NeuralODE(dudt2, tspan, Tsit5(); saveat = tsteps)
+prob_neuralode = Lux.NeuralODE(dudt2, tspan, Tsit5(); saveat = tsteps)
 
 function predict_neuralode(p)
     Array(prob_neuralode(u0, p, st)[1])
@@ -121,7 +121,7 @@ structure for NeuralODEs with separate handling of state variables:
 ```@example neuralode
 dudt2 = Chain(x -> x .^ 3, Dense(2, 20, tanh), Dense(20, 2))
 p, st = Lux.setup(rng, dudt2)
-prob_neuralode = NeuralODE(dudt2, tspan, Tsit5(); saveat = tsteps)
+prob_neuralode = Lux.NeuralODE(dudt2, tspan, Tsit5(); saveat = tsteps)
 ```
 
 Note that we can directly use `Chain`s from Lux.jl as well, for example:
