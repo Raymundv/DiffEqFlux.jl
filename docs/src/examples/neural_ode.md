@@ -31,7 +31,7 @@ end
 prob_trueode = ODEProblem(trueODEfunc, u0, tspan)
 ode_data = Array(solve(prob_trueode, Tsit5(); saveat = tsteps))
 
-dudt2 = Chain(x -> x .^ 3, Dense(2, 50, tanh), Dense(50, 2))
+dudt2 = Chain(x -> x .^ 3, Dense(2, 20, tanh), Dense(20, 2))
 p, st = Lux.setup(rng, dudt2)
 prob_neuralode = NeuralODE(dudt2, tspan, Tsit5(); saveat = tsteps)
 
@@ -119,7 +119,7 @@ the layer. Here we're going to use `Lux.Chain`, which is a suitable neural netwo
 structure for NeuralODEs with separate handling of state variables:
 
 ```@example neuralode
-dudt2 = Chain(x -> x .^ 3, Dense(2, 50, tanh), Dense(50, 2))
+dudt2 = Chain(x -> x .^ 3, Dense(2, 20, tanh), Dense(20, 2))
 p, st = Lux.setup(rng, dudt2)
 prob_neuralode = NeuralODE(dudt2, tspan, Tsit5(); saveat = tsteps)
 ```
@@ -127,7 +127,7 @@ prob_neuralode = NeuralODE(dudt2, tspan, Tsit5(); saveat = tsteps)
 Note that we can directly use `Chain`s from Lux.jl as well, for example:
 
 ```julia
-dudt2 = Chain(x -> x .^ 3, Dense(2, 50, tanh), Dense(50, 2))
+dudt2 = Chain(x -> x .^ 3, Dense(2, 20, tanh), Dense(20, 2))
 ```
 
 In our model, we used the `x -> x.^3` assumption in the model. By incorporating
