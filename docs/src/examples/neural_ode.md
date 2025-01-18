@@ -31,7 +31,7 @@ end
 prob_trueode = ODEProblem(trueODEfunc, u0, tspan)
 ode_data = Array(solve(prob_trueode, Tsit5(); saveat = tsteps))
 
-dudt2 = Chain(x -> x .^ 3, Dense(2, 20, tanh), Dense(20, 2))
+dudt2 = Chain(x -> x .^ 3, Dense(2, 30, tanh), Dense(30, 2))
 p, st = Lux.setup(rng, dudt2)
 prob_neuralode = NeuralODE(dudt2, tspan, Tsit5(); saveat = tsteps)
 
@@ -119,7 +119,7 @@ the layer. Here we're going to use `Lux.Chain`, which is a suitable neural netwo
 structure for NeuralODEs with separate handling of state variables:
 
 ```@example neuralode
-dudt2 = Chain(x -> x .^ 3, Dense(2, 20, tanh), Dense(20, 2))
+dudt2 = Chain(x -> x .^ 3, Dense(2, 30, tanh), Dense(30, 2))
 p, st = Lux.setup(rng, dudt2)
 prob_neuralode = NeuralODE(dudt2, tspan, Tsit5(); saveat = tsteps)
 ```
