@@ -206,7 +206,7 @@ halt when near the minimum.
 # Retrain using the LBFGS optimizer
 optprob2 = remake(optprob; u0 = result_neuralode.u)
 #In the following line of code, a semicolon ";" needs to be placed right after the Optim.BFGS(; initial_stepnorm = 0.1)
-#An initial_stepnorm parameters needs to be set. 
+#An initial_stepnorm parameters needs to be set for Optim.BFGS. Default is 0.1. 
 result_neuralode2 = Optimization.solve(optprob2, Optim.BFGS(; initial_stepnorm = 0.1);
     callback = callback, allow_f_increases = false)
 ```
