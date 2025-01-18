@@ -70,11 +70,11 @@ optf = Optimization.OptimizationFunction((x, p) -> loss_neuralode(x), adtype)
 optprob = Optimization.OptimizationProblem(optf, pinit)
 
 result_neuralode = Optimization.solve(
-    optprob, OptimizationOptimisers.Adam(0.05); callback = callback, maxiters = 300)
+    optprob, OptimizationOptimisers.Adam(0.05); callback = callback, maxiters = 150)
 
 optprob2 = remake(optprob; u0 = result_neuralode.u)
 #In the following line of code, a semicolon ";" needs to be placed right after the Optim.BFGS(; initial_stepnorm = 0.1)
-#An initial_stepnorm parameters needs to be set. 
+#An initial_stepnorm parameters needs to be set for Optim.BFGS. Default is 0.1. 
 result_neuralode2 = Optimization.solve(
     optprob2, Optim.BFGS(; initial_stepnorm = 0.1); callback, allow_f_increases = false)
 
@@ -195,7 +195,7 @@ optf = Optimization.OptimizationFunction((x, p) -> loss_neuralode(x), adtype)
 optprob = Optimization.OptimizationProblem(optf, pinit)
 
 result_neuralode = Optimization.solve(
-    optprob, OptimizationOptimisers.Adam(0.05); callback = callback, maxiters = 300)
+    optprob, OptimizationOptimisers.Adam(0.05); callback = callback, maxiters = 150)
 ```
 
 We then complete the training using a different optimizer, starting from where
