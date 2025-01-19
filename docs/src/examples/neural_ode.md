@@ -54,7 +54,7 @@ function callback(state, l; doplot = false)
     if doplot
         pred = predict_neuralode(state.u)
         plt = scatter(tsteps, ode_data[1, :]; label = "data")
-        scatter!(plt, tsteps, pred[1, :]; label = "prediction")
+        scatter!(plt, tsteps, pred[1, :],markershape=:cross; label = "prediction") #For the predicted data we choose markershape=:cross
         display(plot(plt))
     end
     return false
@@ -68,9 +68,9 @@ adtype = Optimization.AutoZygote()
 
 optf = Optimization.OptimizationFunction((x, p) -> loss_neuralode(x), adtype)
 optprob = Optimization.OptimizationProblem(optf, pinit)
-##An initial_stepnorm parameters needs to be set for Optim.BFGS. Default is 0.05 for the Adam
+##An initial_stepnorm parameters needs to be set Adam. Default is 0.05 for Adam
 result_neuralode = Optimization.solve(
-    optprob, OptimizationOptimisers.Adam(0.05); callback = callback, maxiters = 250)
+    optprob, OptimizationOptimisers.Adam(0.05); callback = callback, maxiters = 350)
 
 optprob2 = remake(optprob; u0 = result_neuralode.u)
 #In the following line of code, a semicolon ";" needs to be placed right after the Optim.BFGS(; initial_stepnorm = 0.02)
@@ -163,7 +163,7 @@ callback = function (state, l; doplot = false)
     if doplot
         pred = predict_neuralode(state.u)
         plt = scatter(tsteps, ode_data[1, :]; label = "data")
-        scatter!(plt, tsteps, pred[1, :]; label = "prediction")
+        scatter!(plt, tsteps, pred[1, :],markershape=:cross; label = "prediction") #For the predicted data we choose markershape=:cross
         display(plot(plt))
     end
     return false
@@ -193,9 +193,9 @@ adtype = Optimization.AutoZygote()
 
 optf = Optimization.OptimizationFunction((x, p) -> loss_neuralode(x), adtype)
 optprob = Optimization.OptimizationProblem(optf, pinit)
-
+##An initial_stepnorm parameters needs to be set Adam. Default is 0.05 for Adam
 result_neuralode = Optimization.solve(
-    optprob, OptimizationOptimisers.Adam(0.05); callback = callback, maxiters = 250)
+    optprob, OptimizationOptimisers.Adam(0.05); callback = callback, maxiters = 350)
 ```
 
 We then complete the training using a different optimizer, starting from where
