@@ -2,7 +2,7 @@
 
 A neural ODE is an ODE where a neural
 network defines its derivative function. For example, with the multilayer
-perceptron neural network `Lux.Chain(Lux.Dense(2, 50, tanh), Lux.Dense(50, 2))`,
+perceptron neural network `Lux.Chain(Lux.Dense(2, 16, tanh), Lux.Dense(16, 2))`,
 we can define a differential equation which is `u' = NN(u)`. This is done simply
 by the `NeuralODE` struct. Let's take a look at an example.
 
@@ -31,7 +31,7 @@ end
 prob_trueode = ODEProblem(trueODEfunc, u0, tspan)
 ode_data = Array(solve(prob_trueode, Tsit5(); saveat = tsteps))
 
-dudt2 = Chain(x -> x .^ 3, Dense(2, 30, tanh), Dense(30, 2))
+dudt2 = Chain(x -> x .^ 3, Dense(2, 16, tanh), Dense(16, 2))
 p, st = Lux.setup(rng, dudt2)
 prob_neuralode = NeuralODE(dudt2, tspan, Tsit5(); saveat = tsteps)
 
@@ -73,10 +73,10 @@ result_neuralode = Optimization.solve(
     optprob, OptimizationOptimisers.Adam(0.05); callback = callback, maxiters = 150)
 
 optprob2 = remake(optprob; u0 = result_neuralode.u)
-#In the following line of code, a semicolon ";" needs to be placed right after the Optim.BFGS(; initial_stepnorm = 0.1)
-#An initial_stepnorm parameters needs to be set for Optim.BFGS. Default is 0.1. 
+#In the following line of code, a semicolon ";" needs to be placed right after the Optim.BFGS(; initial_stepnorm = 0.02)
+#An initial_stepnorm parameters needs to be set for Optim.BFGS. Default is 0.02. 
 result_neuralode2 = Optimization.solve(
-    optprob2, Optim.BFGS(; initial_stepnorm = 0.1); callback, allow_f_increases = false)
+    optprob2, Optim.BFGS(; initial_stepnorm = 0.02); callback, allow_f_increases = false)
 
 callback((; u = result_neuralode2.u), loss_neuralode(result_neuralode2.u); doplot = true)
 ```
@@ -119,7 +119,7 @@ the layer. Here we're going to use `Lux.Chain`, which is a suitable neural netwo
 structure for NeuralODEs with separate handling of state variables:
 
 ```@example neuralode
-dudt2 = Chain(x -> x .^ 3, Dense(2, 30, tanh), Dense(30, 2))
+dudt2 = Chain(x -> x .^ 3, Dense(2, 16, tanh), Dense(16, 2))
 p, st = Lux.setup(rng, dudt2)
 prob_neuralode = NeuralODE(dudt2, tspan, Tsit5(); saveat = tsteps)
 ```
@@ -127,7 +127,7 @@ prob_neuralode = NeuralODE(dudt2, tspan, Tsit5(); saveat = tsteps)
 Note that we can directly use `Chain`s from Lux.jl as well, for example:
 
 ```julia
-dudt2 = Chain(x -> x .^ 3, Dense(2, 20, tanh), Dense(20, 2))
+dudt2 = Chain(x -> x .^ 3, Dense(2, 16, tanh), Dense(16, 2))
 ```
 
 In our model, we used the `x -> x.^3` assumption in the model. By incorporating
@@ -195,7 +195,7 @@ optf = Optimization.OptimizationFunction((x, p) -> loss_neuralode(x), adtype)
 optprob = Optimization.OptimizationProblem(optf, pinit)
 
 result_neuralode = Optimization.solve(
-    optprob, OptimizationOptimisers.Adam(0.05); callback = callback, maxiters = 150)
+    optprob, OptimizationOptimisers.Adam(0.02); callback = callback, maxiters = 250)
 ```
 
 We then complete the training using a different optimizer, starting from where
